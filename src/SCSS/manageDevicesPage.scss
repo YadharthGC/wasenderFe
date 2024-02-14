@@ -1,0 +1,116 @@
+.manageDevicesPage {
+  font-family: "Ubuntu", sans-serif !important;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .headerTitle {
+    font-size: 19px;
+  }
+  .bodyA {
+    margin-top: 5%;
+  }
+
+  .rocketBtn {
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 5px 12px;
+  }
+  .rocketBtn.delbtn {
+    background-color: #f15438;
+  }
+  #rocketIcon {
+    font-size: 20px;
+  }
+  .rocketIcon {
+    padding-right: 5%;
+  }
+  .manBox {
+    background-color: #e8f5e9;
+    border: solid 1px green;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  .manTable {
+    width: 100%;
+  }
+  th {
+    font-size: 13px;
+    text-align: start !important;
+    padding: 5px 0px;
+  }
+  td {
+    .content {
+      font-size: 13px;
+      width: 80%;
+      background-color: white;
+      color: black;
+      padding: 5px 5px;
+      border: solid 1px gray;
+      border-radius: 5px;
+    }
+  }
+  .qrTag {
+    width: 100%;
+    height: 100%;
+  }
+  .bodyB {
+    margin-top: 5%;
+    border: solid 1px gray;
+    border-radius: 5px;
+  }
+  .manB {
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .whatsAppText {
+    flex: 0.6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .textTitle {
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .className {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .submitInDiv {
+    font-size: 13px;
+    border-radius: 5px;
+    background-color: #1f8be1;
+    color: white;
+    text-align: center;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+  }
+  .manB.authFalse {
+    height: 200px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px gray;
+    border-radius: 5px;
+  }
+  .firstText {
+    margin-bottom: 3%;
+  }
+  .firstBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

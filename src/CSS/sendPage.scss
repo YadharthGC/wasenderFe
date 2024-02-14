@@ -1,0 +1,70 @@
+.sendPage {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .subPart {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .title {
+    flex: 0.5;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 30px;
+    font-weight: bolder;
+  }
+  .subPart {
+    flex: 0.5;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .notifyDiv {
+    margin-left: 2%;
+  }
+  .accountDiv {
+    margin-left: 2%;
+  }
+  .userName {
+    margin-left: 2%;
+  }
+  .sendBtnDiv {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+  }
+  .bodyA {
+    padding-top: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+  .bodyB {
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+  #textArea {
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 100%;
+    height: 200px;
+    border-radius: 30px;
+    border: none;
+    box-shadow: -14px 7px 48px -12px rgba(0, 0, 0, 0.75);
+    font-size: 20px;
+  }
+  #textArea:focus {
+    outline: lightblue;
+  }
+  .MuiInputBase-colorPrimary {
+    background-color: white;
+    border-radius: 20px;
+    border: none;
+    box-shadow: -14px 7px 48px -12px rgba(0, 0, 0, 0.75);
+  }
+}
