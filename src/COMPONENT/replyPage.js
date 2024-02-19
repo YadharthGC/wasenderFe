@@ -102,18 +102,6 @@ export default function ReplyPage() {
       <div className="header">
         <div className="headerTitle">AutoReplies</div>
         <div className="addTitle">
-          {/* <button
-            className="addBtn bulk"
-            onClick={() => {
-              // dispatch(funSetContact(""));
-              // navigate("../bulkcreatecontact");
-            }}
-          >
-            <span className="plusBold bulk">
-              <GroupAddIcon />
-            </span>
-            <span className="addbtntitle">Add Bulk</span>
-          </button> */}
           <button
             className="addBtn"
             onClick={() => {
@@ -134,20 +122,7 @@ export default function ReplyPage() {
             <PeopleAltIcon id="devFold" />
             AutoReplies
           </span>
-          <span className="atdSpan">
-            {/* <button
-              className="rocketBtn"
-              style={{ backgroundColor: "#f15438" }}
-              onClick={() => {
-                // handleDeleteDuplicates();
-              }}
-            >
-              <span className="rocketIcon">
-                <DeleteRounded id="rocketIcon" />
-              </span>
-              <span className="rocketTitle">Delete Duplicates</span>
-            </button> */}
-          </span>
+          <span className="atdSpan"></span>
         </div>
 
         <div className="tableDiv">
@@ -200,142 +175,6 @@ export default function ReplyPage() {
                     </tr>
                   );
                 })}
-              <tr>
-                <td>my name is billa.valkai ellam nanumpkak </td>
-                <td>Chiatra</td>
-                <td>hari</td>
-                <td>Enaku theriyum athu billa movie nu bye bye</td>
-                <td className="tdE">
-                  <button
-                    onClick={() => {
-                      // handleEditContact(data);
-                    }}
-                    className="rocketBtn"
-                    style={{ backgroundColor: "yellow" }}
-                  >
-                    <span className="rocketIcon">
-                      <ModeEditIcon id="rocketIcon" />
-                    </span>
-                    <span className="rocketTitle">Edit</span>
-                  </button>
-                  <button
-                    className="rocketBtn"
-                    style={{ backgroundColor: "#f15438" }}
-                    onClick={() => {
-                      // handleDeleteContacts(data);
-                    }}
-                  >
-                    <span className="rocketIcon">
-                      <DeleteRounded id="rocketIcon" />
-                    </span>
-                    <span className="rocketTitle">Delete</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>my name is billa.valkai ellam nanumpkak </td>
-                <td>Chiatra</td>
-                <td>hari</td>
-                <td>Enaku theriyum athu billa movie nu bye bye</td>
-                <td className="tdE">
-                  <button
-                    onClick={() => {
-                      // handleEditContact(data);
-                    }}
-                    className="rocketBtn"
-                    style={{ backgroundColor: "yellow" }}
-                  >
-                    <span className="rocketIcon">
-                      <ModeEditIcon id="rocketIcon" />
-                    </span>
-                    <span className="rocketTitle">Edit</span>
-                  </button>
-                  <button
-                    className="rocketBtn"
-                    style={{ backgroundColor: "#f15438" }}
-                    onClick={() => {
-                      // handleDeleteContacts(data);
-                    }}
-                  >
-                    <span className="rocketIcon">
-                      <DeleteRounded id="rocketIcon" />
-                    </span>
-                    <span className="rocketTitle">Delete</span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>my name is billa.valkai ellam nanumpkak </td>
-                <td>Chiatra</td>
-                <td>hari</td>
-                <td>Enaku theriyum athu billa movie nu bye bye</td>
-                <td className="tdE">
-                  <button
-                    onClick={() => {
-                      // handleEditContact(data);
-                    }}
-                    className="rocketBtn"
-                    style={{ backgroundColor: "yellow" }}
-                  >
-                    <span className="rocketIcon">
-                      <ModeEditIcon id="rocketIcon" />
-                    </span>
-                    <span className="rocketTitle">Edit</span>
-                  </button>
-                  <button
-                    className="rocketBtn"
-                    style={{ backgroundColor: "#f15438" }}
-                    onClick={() => {
-                      // handleDeleteContacts(data);
-                    }}
-                  >
-                    <span className="rocketIcon">
-                      <DeleteRounded id="rocketIcon" />
-                    </span>
-                    <span className="rocketTitle">Delete</span>
-                  </button>
-                </td>
-              </tr>
-              {/* {devices.map((data) => {
-                return (
-                  <tr>
-                    <td>
-                      <div className="accSpan">
-                        <AccountCircleIcon id="accIcon" />
-                      </div>
-                    </td>
-                    <td>{data.number}</td>
-                    <td>{data.name}</td>
-                    <td>{data.created}</td>
-                    <td className="tdE">
-                      <button
-                        onClick={() => {
-                          // handleEditContact(data);
-                        }}
-                        className="rocketBtn"
-                        style={{ backgroundColor: "yellow" }}
-                      >
-                        <span className="rocketIcon">
-                          <ModeEditIcon id="rocketIcon" />
-                        </span>
-                        <span className="rocketTitle">Edit</span>
-                      </button>
-                      <button
-                        className="rocketBtn"
-                        style={{ backgroundColor: "#f15438" }}
-                        onClick={() => {
-                          // handleDeleteContacts(data);
-                        }}
-                      >
-                        <span className="rocketIcon">
-                          <DeleteRounded id="rocketIcon" />
-                        </span>
-                        <span className="rocketTitle">Delete</span>
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })} */}
             </tbody>
           </table>
         </div>

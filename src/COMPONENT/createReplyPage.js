@@ -102,6 +102,8 @@ export default function CreateReplyPage() {
               fromObj.push({
                 label: fromCon[i].label,
                 value: fromCon[i].value,
+                name: fromCon[i].label,
+                number: fromCon[i].value,
               });
             }
             setSelected(fromObj);
