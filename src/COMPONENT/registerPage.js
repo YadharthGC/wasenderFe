@@ -3,7 +3,7 @@ import SpaIcon from "@mui/icons-material/Spa";
 import MailIcon from "@mui/icons-material/Mail";
 import KeyIcon from "@mui/icons-material/Key";
 import LoginIcon from "@mui/icons-material/Login";
-import "../CSS/registerPage.scss";
+import "../SCSS/registerPage.scss";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
@@ -42,7 +42,7 @@ export default function RegisterPage() {
           <div
             className="signInDiv"
             onClick={() => {
-              navigate("/filearea");
+              navigate("/filearea/dashboard");
             }}
           >
             Sign In

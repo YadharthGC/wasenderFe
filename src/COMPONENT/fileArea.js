@@ -42,6 +42,7 @@ import LogPage from "./logPage";
 import BulkContactPage from "./bulkContactPage";
 import AddDevicesPage from "./addDevicePage";
 import ManageDevicesPage from "./manageDevicesPage";
+import { DashBoardPage } from "./dashboardPage";
 
 export default function FileArea() {
   const drawerWidth = 250;
@@ -85,8 +86,8 @@ export default function FileArea() {
               key={text}
               disablePadding
               onClick={() => {
-                if (text === "Dashboard") {
-                  navigate("dashboard");
+                if (text === "DashBoard") {
+                  navigate("./dashboard");
                 } else if (text === "Devices") {
                   navigate("./devices");
                 } else if (text === "Contacts") {
@@ -286,11 +287,12 @@ export default function FileArea() {
         <Toolbar />
         <Typography paragraph>
           <Routes>
+            <Route path="/dashboard" element={<DashBoardPage />} />
             <Route path="/devices" element={<DevicesPage />} />
             <Route path="/managedevices" element={<ManageDevicesPage />} />
+            <Route path="/adddevice" element={<AddDevicesPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/createcontact" element={<CreateContactPage />} />
-            <Route path="/adddevice" element={<AddDevicesPage />} />
             <Route path="/bulkcreatecontact" element={<BulkContactPage />} />
             <Route path="/send" element={<SendPage />} />
             <Route path="/log" element={<LogPage />} />

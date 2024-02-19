@@ -10,6 +10,14 @@ import QrCodeIcon from "@mui/icons-material/QrCode";
 import qrimg from "../images/qr.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { funSetDevice } from "../reactRedux/action";
+import wapImg from "../images/wap.jpg";
+import { Grid } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+import CancelScheduleSendIcon from "@mui/icons-material/CancelScheduleSend";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import DangerousIcon from "@mui/icons-material/Dangerous";
+import CrisisAlertIcon from "@mui/icons-material/CrisisAlert";
+// import { Buffer } from "buffer";
 
 export default function ManageDevicesPage() {
   const device = useSelector((state) => state.contactReducer.device);
@@ -20,6 +28,7 @@ export default function ManageDevicesPage() {
   const insID = "instance77445";
   const insTok = "gwab0rhjqpa8d539";
   const dispatch = useDispatch();
+  const [status, setStatus] = useState(false);
 
   useEffect(() => {
     try {
@@ -35,41 +44,95 @@ export default function ManageDevicesPage() {
     //https://api.ultramsg.com/instance77445/instance/qr?token=gwab0rhjqpa8d539
   }, [auth]);
 
-  const handleVerifyB = async () => {
+  useEffect(() => {
     try {
-      console.log(device);
-      let dataObj = {
-        ...device,
-        instanceID: "instance77445",
-        token: "gwab0rhjqpa8d539",
-      };
-      await axios.post(`${linkNode}/qrcode`, dataObj).then((res) => {
-        setChance(true);
-        let i = 0;
-        let startFun = async () => {
-          i++;
-          if (i === 20) {
-            clearInterval(startRun);
-            setChance(false);
-            //instance status
-            handleInstanceStatus(dataObj);
-            //
-          }
-        };
-        let startRun = setInterval(startFun, 1000);
-      });
+      setStatus(false);
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [status]);
 
-  const handleVerify = async () => {
-    let dataObj = {
-      ...device,
-      instanceID: "instance77445",
-      token: "gwab0rhjqpa8d539",
-    };
-    handleInstanceStatus(dataObj);
+  // const handleVerifyBx = async () => {
+  //   try {
+  //     console.log(device);
+  //     let dataObj = {
+  //       ...device,
+  //       instanceID: "instance77445",
+  //       token: "gwab0rhjqpa8d539",
+  //     };
+  //     await axios.post(`${linkNode}/qrcode`, dataObj).then((res) => {
+  //       setChance(true);
+  //       let i = 0;
+  //       let startFun = async () => {
+  //         i++;
+  //         console.log(i);
+  //         if (i === 20) {
+  //           clearInterval(startRun);
+  //           setChance(false);
+  //           //instance status
+  //           //handleInstanceStatus(dataObj);
+  //           //
+  //         }
+  //       };
+  //       let startRun = setInterval(startFun, 1000);
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // const handleVerifyB = async () => {
+  //   let dataObj = {
+  //     ...device,
+  //     instanceID: "instance77445",
+  //     token: "gwab0rhjqpa8d539",
+  //   };
+  //   handleInstanceStatus(dataObj);
+  // };
+
+  const handleVerify = () => {
+    try {
+      let config = {
+        method: "get",
+        url: "https://api.ultramsg.com/instance77445/instance/qr",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        params: {
+          token: "gwab0rhjqpa8d539",
+        },
+      };
+
+      axios(config)
+        .then(function (response) {
+          setq(`https://api.ultramsg.com/${insID}/instance/qr?token=${insTok}`);
+          setChance(true);
+          // setTimeout(()=>{},)
+          //setStatus(true);
+
+          let i = 0;
+          let startFun = async () => {
+            i++;
+            console.log(i);
+            if (i === 20) {
+              clearInterval(startRun);
+              await handleInstanceStatus(device);
+              setChance(false);
+              //instance status
+              //handleInstanceStatus(dataObj);
+              //
+            }
+          };
+          let startRun = setInterval(startFun, 1000);
+
+          // await
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleInstanceStatus = async (dataObj) => {
@@ -77,13 +140,13 @@ export default function ManageDevicesPage() {
       console.log(dataObj);
       await axios.post(`${linkNode}/instance`, dataObj).then(async (res) => {
         console.log(res.data.message);
-        if (
-          res.data?.message?.status?.accountStatus?.status === "authenticated"
-        ) {
+        if (res.data?.message === "authenticated") {
           setAuth(true);
-
           dispatch(funSetDevice({ ...dataObj, authenthicate: true }));
-          await handleInstanceChange(dataObj);
+          // await handleInstanceChange(dataObj);
+        } else if (res.data?.message === "standby") {
+          setAuth(false);
+          dispatch(funSetDevice({ ...dataObj, authenthicate: false }));
         }
       });
     } catch (err) {
@@ -209,7 +272,9 @@ export default function ManageDevicesPage() {
             </div>
             <div className="qrcode">
               <img
-                src="https://api.ultramsg.com/instance77445/instance/qr?token=gwab0rhjqpa8d539"
+                //src="u"
+                src={qqq}
+                //src="https://api.ultramsg.com/instance77445/instance/qr?token=gwab0rhjqpa8d539"
                 //src={`https://api.ultramsg.com/${device.instanceID}/instance/qr?token=${device.token}`}
                 //src={`https://api.ultramsg.com/${insID}/instance/qr?token=${insTok}`}
                 alt="qrTag"
@@ -222,34 +287,82 @@ export default function ManageDevicesPage() {
         )}
 
         {auth ? (
-          <div className="manB">
-            true
-            {/* <div className="whatsAppText">
-              <div className="textTitle">
-                To send and receive Messages, authorize the instance
-              </div>
-              <div className="whatsappList">
-                <ol>
-                  <li>Open WhatsApp on your Mobile</li>
-                  <li>
-                    Tap
-                    <span className="textIcons">
-                      <MoreVertIcon />
-                    </span>
-                    --- Settings ---
-                    <span className="textIcons">
-                      <QrCodeIcon />
-                    </span>
-                    --- Scan QR
-                  </li>
-                  <li>Capture Code</li>
-                </ol>
-              </div>
-            </div>
-            <div className="qrcode">
-              <img src={qrimg} className="qrTag" alt="qrcode" />
-            </div> */}
-          </div>
+          <>
+            <Grid container columnSpacing={2}>
+              <Grid item xs={6}>
+                <div className="truemanB">
+                  <div className="picDiv">
+                    <div className="wapPic">
+                      <img src={wapImg} alt="" className="wapImg" />
+                    </div>
+                    <div className="wapText">
+                      <div className="wapHead">Connected</div>
+                      <div className="wapTextCon">
+                        Your phone doesn't need to stay online but your linked
+                        devices will be logged out if you don’t use your phone
+                        for over 14 days.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <div className="statDiv">
+                  <table className="iconsTab">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div className="smPic">
+                            <SendIcon id="sentIcon" />
+                          </div>
+                          <div className="smText">
+                            <div className="TextA">Sent</div>
+                            <div className="TextB">40</div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="smPic">
+                            <HourglassBottomIcon id="queueIcon" />
+                          </div>
+                          <div className="smText">
+                            <div className="TextA">Queue</div>
+                            <div className="TextB">40</div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="smPic">
+                            <CancelScheduleSendIcon id="unsentIcon" />
+                          </div>
+                          <div className="smText">
+                            <div className="TextA">Unsent</div>
+                            <div className="TextB">40</div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="smPic">
+                            <DangerousIcon id="invalidIcon" />
+                          </div>
+                          <div className="smText">
+                            <div className="TextA">Invalid</div>
+                            <div className="TextB">40</div>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="smPic">
+                            <CrisisAlertIcon id="expIcon" />
+                          </div>
+                          <div className="smText">
+                            <div className="TextA">Expired</div>
+                            <div className="TextB">40</div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </Grid>
+            </Grid>
+          </>
         ) : (
           ""
         )}

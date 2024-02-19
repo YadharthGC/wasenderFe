@@ -113,4 +113,95 @@
     justify-content: center;
     align-items: center;
   }
+  .picDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: solid 1px gray;
+    background-color: #f8f9fb;
+    border-radius: 5px;
+  }
+  .wapImg {
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
+    height: 140px;
+    border-radius: 5px;
+  }
+  .wapic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+  }
+  .wapHead {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .wapTextCon {
+    font-size: 13px;
+    color: #1f8be1;
+    margin-top: 3%;
+  }
+  .wapText {
+    padding: 5px 10%;
+  }
+  .statDiv {
+    table,
+    td {
+      border: solid 1px green;
+      // border-radius: 5px;
+      border-collapse: collapse;
+      background-color: #e8f5e9;
+    }
+    td {
+      padding: 5px 0px;
+    }
+  }
+  .iconsTab {
+    width: 100%;
+  }
+  .smPic {
+    text-align: center;
+  }
+  .smText {
+    text-align: center;
+  }
+  .TextA {
+    text-align: center;
+
+    color: #1f8be1;
+  }
+  .TextB {
+    text-align: center;
+    font-size: 13px;
+  }
+  .bodyB:has(.truemanB) {
+    border: none;
+  }
+  #sentIcon {
+    color: green;
+    font-size: 25px;
+  }
+  #unsentIcon {
+    color: rosybrown;
+    font-size: 25px;
+  }
+  #invalidIcon {
+    color: red;
+    font-size: 25px;
+  }
+  #queueIcon {
+    color: blue;
+    font-size: 25px;
+  }
+  #expIcon {
+    color: yellow;
+    font-size: 25px;
+  }
+  .mePic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
