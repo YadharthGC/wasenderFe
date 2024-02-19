@@ -14,64 +14,40 @@ import Select from "react-select";
 import { linkNode } from "../nodelink";
 import axios from "axios";
 import FileBase64 from "react-file-base64";
-import { data } from "@tensorflow/tfjs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function SendPage() {
+export default function CreateReplyPage() {
   const [show, setShow] = useState("chat");
   const [selected, setSelected] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const options = [
-    { label: "Grapes", value: "grapes" },
-    { label: "Mango", value: "mango" },
-    { label: "Strawberry", value: "strawberry" },
-    { label: "Grapes1", value: "grapes1" },
-    { label: "Mango1", value: "mango1" },
-    { label: "Strawberry1", value: "strawberry1" },
-    { label: "Grapes2", value: "grapes2" },
-    { label: "Mango2", value: "mango2" },
-    { label: "Strawberry2", value: "strawberry2" },
-    { label: "Grapes3", value: "grapes3" },
-    { label: "Mango3", value: "mango3" },
-    { label: "Grapes31", value: "grapes4" },
-    { label: "Mango4", value: "mango4" },
-    { label: "Grapes4", value: "grapes5" },
-    { label: "Mango5", value: "mango5" },
-    { label: "Grapes5", value: "grapes7" },
-    { label: "Mango6", value: "mango7" },
-  ];
   const [fromOptions, setFromOptions] = useState([]);
   const [toOptions, setToOptions] = useState([]);
-  const [devices, setDevices] = useState([]);
-  const [contacts, setContacts] = useState([]);
   const [base, setBase] = useState("");
   const [bodyText, setBodyText] = useState("");
   const [latText, setLatText] = useState("");
   const [lgnText, setLgnText] = useState("");
   const [docTitle, setDocTitle] = useState("");
+  const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
   const params = useParams();
-  const [siteID, setSiteID] = useState(false);
+  const [editType, setEditType] = useState(false);
 
   useEffect(() => {
     try {
-      console.log(params);
-      if (params?.id) {
-        setSiteID(true);
-      }
       handleGetDevicesApi();
+      if (params?.id) {
+        console.log(params.id);
+        setEditType(true);
+        handleGetReply(params.id);
+      }
     } catch (err) {
       console.log(err);
     }
   }, []);
 
-  useEffect(() => {
-    console.log(selectedOption);
-  }, [selectedOption]);
-
   const handleGetDevicesApi = async () => {
     try {
       await axios.post(`${linkNode}/getdevice`).then((res) => {
-        setDevices(res.data.arrData);
         //fromOptions
         let fromData = res.data.arrData;
         let finalFrom = [];
@@ -90,7 +66,6 @@ export default function SendPage() {
         setFromOptions(finalFrom);
       });
       await axios.post(`${linkNode}/getcontacts`).then((res) => {
-        setContacts(res.data?.msgArr?.reverse());
         //ToOptions
         let toData = res.data?.msgArr?.reverse();
         let toFrom = [];
@@ -111,21 +86,62 @@ export default function SendPage() {
     }
   };
 
+  const handleGetReply = async (id) => {
+    try {
+      await axios
+        .post(`${linkNode}/idreply`, { id })
+        .then((res) => {
+          console.log(res.data);
+          let dataObj = res.data?.msg;
+          if (dataObj) {
+            setShow(dataObj.type);
+
+            let fromCon = dataObj.from;
+            let fromObj = [];
+            for (let i = 0; i < fromCon.length; i++) {
+              fromObj.push({
+                label: fromCon[i].label,
+                value: fromCon[i].value,
+              });
+            }
+            setSelected(fromObj);
+            console.log(dataObj.to);
+            setSelectedOption(dataObj.to);
+            setBodyText(dataObj.body);
+            setDocTitle(dataObj.fileName);
+            setBase(dataObj.file);
+
+            let spanBaseEl = document.querySelector("#spanBase");
+
+            if (spanBaseEl) {
+              let inputEl = spanBaseEl.querySelector("input");
+              let list = new DataTransfer();
+              let file = new File([dataObj.file], dataObj.fileName);
+              list.items.add(file);
+
+              let myFileList = list.files;
+              inputEl.files = myFileList;
+            }
+            //
+            setLatText(dataObj.lat);
+            setLgnText(dataObj.lng);
+            setMsg(dataObj.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleSend = async () => {
     try {
-      console.log(
-        // selected,
-        // selectedOption,
-        // show,
-        // bodyText,
-        // latText,
-        // lgnText,
-        // base,
-        docTitle
-      );
       let dataObj = {
-        from: selectedOption,
-        to: selected,
+        message: msg,
+        to: selectedOption,
+        from: selected,
         file: base.toString(),
         fileName: docTitle,
         body: bodyText,
@@ -133,9 +149,35 @@ export default function SendPage() {
         lng: lgnText,
         type: show,
       };
-      await axios.post(`${linkNode}/sendmsg`, dataObj).then((res) => {
+      await axios.post(`${linkNode}/createreply`, dataObj).then((res) => {
         console.log(res.data);
+        navigate("../reply");
       });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleEdit = async () => {
+    try {
+      let dataObj = {
+        message: msg,
+        to: selectedOption,
+        from: selected,
+        file: base.toString(),
+        fileName: docTitle,
+        body: bodyText,
+        lat: latText,
+        lng: lgnText,
+        type: show,
+      };
+      await axios
+        .post(`${linkNode}/editreply`, { id: params.id, dataObj })
+        .then((res) => {
+          console.log(res.data);
+          navigate("../reply");
+        });
+      console.log(dataObj);
     } catch (err) {
       console.log(err);
     }
@@ -144,7 +186,9 @@ export default function SendPage() {
   return (
     <div className="sendPage">
       <div className="header">
-        <div className="headerTitle">Send Message</div>
+        <div className="headerTitle">
+          {editType ? "Edit Reply" : "Create Reply"}
+        </div>
       </div>
       <div className="bodyA">
         <div className="gridA">
@@ -237,7 +281,26 @@ export default function SendPage() {
                 </div>
                 <div className="headContent">
                   <div className="toDiv">
-                    <div className="spanA">To:</div>
+                    <div className="spanA">
+                      Message:
+                      <br />
+                      (keyWord)
+                    </div>
+
+                    <div className="spanB">
+                      <input
+                        type="text"
+                        className="contactText"
+                        value={msg}
+                        onChange={(e) => {
+                          setMsg(e.target.value);
+                        }}
+                        style={{ width: "100%" }}
+                      />
+                    </div>
+                  </div>
+                  <div className="toDiv">
+                    <div className="spanA">From:</div>
                     <div className="spanB">
                       <MultiSelect
                         id="multiSelect"
@@ -250,12 +313,13 @@ export default function SendPage() {
                   </div>
 
                   <div className="toDiv">
-                    <div className="spanA">From:</div>
+                    <div className="spanA">To:</div>
                     <div className="spanB">
                       <Select
-                        placeholder="From"
+                        placeholder="To"
                         id="selectTag"
-                        defaultValue={selectedOption}
+                        value={selectedOption}
+                        // defaultValue={selectedOption}
                         onChange={setSelectedOption}
                         options={fromOptions}
                       />
@@ -288,17 +352,17 @@ export default function SendPage() {
                         <div className="spanA">
                           {show.charAt(0).toUpperCase() + show.slice(1)}:
                         </div>
-                        <div className="spanB">
+                        <div className="spanB" id="spanBase">
                           <FileBase64
+                            value={docTitle}
                             onDone={(e) => {
-                              console.log(e);
                               console.log(e.name);
                               setDocTitle(e.name);
                               console.log(e.base64);
                               setBase(e.base64);
                             }}
+                            id="baseFile"
                           />
-                          {/* <input type="file" className="fileInput" /> */}
                         </div>
                       </div>
 
@@ -330,7 +394,6 @@ export default function SendPage() {
                               setBase(e.base64);
                             }}
                           />
-                          {/* <input type="file" className="fileInput" /> */}
                         </div>
                       </div>
                     </>
@@ -404,13 +467,21 @@ export default function SendPage() {
                     <div
                       className="sendDivbtn"
                       onClick={() => {
-                        handleSend();
+                        if (editType) {
+                          console.log("edit");
+                          handleEdit();
+                        } else {
+                          console.log("new");
+                          handleSend();
+                        }
                       }}
                     >
                       <span className="sendIconSpan">
                         <SendIcon id="sendIcon" />
                       </span>
-                      <span className="spanTitle">send</span>
+                      <span className="spanTitle">
+                        {editType ? "Edit" : "Create"}
+                      </span>
                     </div>
                   </div>
                 </div>

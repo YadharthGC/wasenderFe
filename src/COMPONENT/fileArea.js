@@ -43,6 +43,8 @@ import BulkContactPage from "./bulkContactPage";
 import AddDevicesPage from "./addDevicePage";
 import ManageDevicesPage from "./manageDevicesPage";
 import { DashBoardPage } from "./dashboardPage";
+import ReplyPage from "./replyPage";
+import CreateReplyPage from "./createReplyPage";
 
 export default function FileArea() {
   const drawerWidth = 250;
@@ -296,6 +298,9 @@ export default function FileArea() {
             <Route path="/bulkcreatecontact" element={<BulkContactPage />} />
             <Route path="/send" element={<SendPage />} />
             <Route path="/log" element={<LogPage />} />
+            <Route path="/reply" element={<ReplyPage />} />
+            <Route path="/createreply" element={<CreateReplyPage />} />
+            <Route path="/editreply/:id" element={<CreateReplyPage />} />
           </Routes>
         </Typography>
       </Box>
